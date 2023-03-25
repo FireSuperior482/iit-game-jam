@@ -37,7 +37,7 @@ public class ABILITYUSE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // collectable_factors = collectable.totalapples + 2;
+       collectable_factors = movements.totalapples + 2;
        // if (Input.GetKey(KeyCode.Z))
         if(_newControls.player.Rewind.ReadValue<float>()==1)
         {

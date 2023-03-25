@@ -14,17 +14,23 @@ public class movements : MonoBehaviour
     public static bool isgrounded = true;
     [SerializeField]
     private SpriteRenderer sr;
-   // gismo1 lines;
-  //  public GameObject linerend;
+    public List<GameObject> fruits;
+    public static int totalapples = 0;
+    public Transform button;
+    private GameObject x;
+    private bool iscollision = false;
+    // gismo1 lines;
+    //  public GameObject linerend;
 
     public bool m_facingright = true;
     int action;
     public static bool isjumping = false;
     public static bool isfalling = false;
     int actionid, isfallingid;
-   // RewindByKeyPress rewind;
-   // WaitForSeconds deathdelay = new WaitForSeconds(1f);
-   // public static bool leftrightjumpcheck = false;
+    // RewindByKeyPress rewind;
+    public float force;
+    // WaitForSeconds deathdelay = new WaitForSeconds(1f);
+    // public static bool leftrightjumpcheck = false;
 
 
 
@@ -79,7 +85,33 @@ public class movements : MonoBehaviour
         */
         anim.SetInteger(actionid, action);
         anim.SetBool(isfallingid, isfalling);
+        if (iscollision == true)
+        {
+            if (fruits.Count != 0)
+            {
+                for (int i = 0; i < fruits.Count; i++)
+                {
+                    Vector3 directionofmove = (button.position - fruits[i].transform.position).normalized;
+                    fruits[i].transform.position += directionofmove * Time.deltaTime * force;
+                    if ((button.position - fruits[i].transform.position).magnitude <= 2f)
+                    {
+                       // anim.SetBool(appleanim, true);
+                        //StartCoroutine(appleanimationhai());
+                        Destroy(fruits[i]);
+                        totalapples++;
+                        fruits.Remove(fruits[i]);
 
+                    }
+
+                }
+
+            }
+            if (fruits.Count == 0)
+            {
+                iscollision = false;
+            }
+
+        }
 
 
 
@@ -155,29 +187,46 @@ public class movements : MonoBehaviour
             //  CreateDust();
         }
     }
-  //  IEnumerator deathanimation1()
-   // {
-   //     yield return deathdelay;
-   //     Time.timeScale = 0f;
-  //      pausemenu.SetActive(true);
-  //  }
-   /* public void deathanimation()
+    //  IEnumerator deathanimation1()
+    // {
+    //     yield return deathdelay;
+    //     Time.timeScale = 0f;
+    //      pausemenu.SetActive(true);
+    //  }
+    /* public void deathanimation()
+     {
+         if (energysystem.intenergy < 0)
+         {
+             action = 3;
+             StartCoroutine(deathanimation1());
+         }
+     }
+    */
+    /*  public void check()
+      {
+          leftrightjumpcheck = true;
+      }
+      public void checkend()
+      {
+          leftrightjumpcheck = false;
+      }
+
+    */
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (energysystem.intenergy < 0)
+        if (collision.gameObject.CompareTag("apples"))
         {
-            action = 3;
-            StartCoroutine(deathanimation1());
+            iscollision = true;
+
+            x = collision.gameObject;
+
+
+            fruits.Add(x);
+
+            x.GetComponent<CircleCollider2D>().enabled = false;
+
+
         }
     }
-   */
-  /*  public void check()
-    {
-        leftrightjumpcheck = true;
-    }
-    public void checkend()
-    {
-        leftrightjumpcheck = false;
-    }
-  */
 }
 

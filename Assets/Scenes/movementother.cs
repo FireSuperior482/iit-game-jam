@@ -10,13 +10,14 @@ public class movementother : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public float sizefactor;
-    // public GameObject pausemenu;
+    private GameObject x; 
+    public float force;
+   
     public float jumpforce = 12f;
     public static bool isgrounded1 = true;
     [SerializeField]
     private SpriteRenderer sr;
-    // gismo1 lines;
-    //  public GameObject linerend;
+  
 
     public bool m_facingright = true;
     int action1;
@@ -24,17 +25,16 @@ public class movementother : MonoBehaviour
     public static bool isfalling1 = false;
     int actionid1, isfallingid1;
     Vector3 originalsize;
+   
     ABILITYUSE ability;
-    // RewindByKeyPress rewind;
-    // WaitForSeconds deathdelay = new WaitForSeconds(1f);
-    // public static bool leftrightjumpcheck = false;
-
-    
-
-
+   
+    public Transform button;
+    public int totalapples = 0;
+   public Animator anim1;
+  
     void Start()
     {
-        //rewind = FindObjectOfType<RewindByKeyPress>();
+     
         controls = new NewControls();
         controls.player.Enable();
         rb = GetComponent<Rigidbody2D>();
@@ -96,7 +96,7 @@ public class movementother : MonoBehaviour
         anim.SetInteger(actionid1, action1);
         anim.SetBool(isfallingid1, isfalling1);
 
-
+      
 
 
     }
@@ -117,7 +117,7 @@ public class movementother : MonoBehaviour
         }
 
     }
-
+  
     void playermovement()
     {
 
@@ -171,29 +171,30 @@ public class movementother : MonoBehaviour
             //  CreateDust();
         }
     }
-    //  IEnumerator deathanimation1()
-    // {
-    //     yield return deathdelay;
-    //     Time.timeScale = 0f;
-    //      pausemenu.SetActive(true);
-    //  }
-    /* public void deathanimation()
-     {
-         if (energysystem.intenergy < 0)
+   
+        //  IEnumerator deathanimation1()
+        // {
+        //     yield return deathdelay;
+        //     Time.timeScale = 0f;
+        //      pausemenu.SetActive(true);
+        //  }
+        /* public void deathanimation()
          {
-             action = 3;
-             StartCoroutine(deathanimation1());
+             if (energysystem.intenergy < 0)
+             {
+                 action = 3;
+                 StartCoroutine(deathanimation1());
+             }
          }
-     }
-    */
-    /*  public void check()
-      {
-          leftrightjumpcheck = true;
-      }
-      public void checkend()
-      {
-          leftrightjumpcheck = false;
-      }
-    */
-}
+        */
+        /*  public void check()
+          {
+              leftrightjumpcheck = true;
+          }
+          public void checkend()
+          {
+              leftrightjumpcheck = false;
+          }
+        */
+    }
 
