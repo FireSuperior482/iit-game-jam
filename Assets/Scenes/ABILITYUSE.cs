@@ -12,7 +12,7 @@ public class ABILITYUSE : MonoBehaviour
     public float CurrentHealth = 100f;
     public int collectable_factors;
     public bool IskeyEnabled_w;
-    public  static float newFactor = 15f;
+    public  static float newFactor = 20f;
     // public GameObject sphere;
    // Movement collectable;
     NewControls _newControls;
@@ -59,10 +59,12 @@ public class ABILITYUSE : MonoBehaviour
 
         {
             CurrentHealth = 0f;
+            movementother.condition = true;
             Rewinder.canRewind = false;
         }
         else if(CurrentHealth >0){
             Rewinder.canRewind = true;
+            movementother.condition = false;
         }
        
         

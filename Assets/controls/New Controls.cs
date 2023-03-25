@@ -80,6 +80,15 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""active"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab9eb9b9-df58-4ff7-8647-26636e36ef7b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -192,6 +201,39 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
                     ""action"": ""size"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""ac9df2a3-e84b-459a-b4fe-81041b05223d"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""active"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""1779609e-7e37-45c5-9a39-a85b1f7f176e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""active"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""60947f0d-9bd0-49d0-8c6f-07d854265471"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""active"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -796,6 +838,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         m_player_movements1 = m_player.FindAction("movements1", throwIfNotFound: true);
         m_player_jump1 = m_player.FindAction("jump1", throwIfNotFound: true);
         m_player_size = m_player.FindAction("size", throwIfNotFound: true);
+        m_player_active = m_player.FindAction("active", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_up = m_UI.FindAction("up", throwIfNotFound: true);
@@ -880,6 +923,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_player_movements1;
     private readonly InputAction m_player_jump1;
     private readonly InputAction m_player_size;
+    private readonly InputAction m_player_active;
     public struct PlayerActions
     {
         private @NewControls m_Wrapper;
@@ -890,6 +934,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         public InputAction @movements1 => m_Wrapper.m_player_movements1;
         public InputAction @jump1 => m_Wrapper.m_player_jump1;
         public InputAction @size => m_Wrapper.m_player_size;
+        public InputAction @active => m_Wrapper.m_player_active;
         public InputActionMap Get() { return m_Wrapper.m_player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -917,6 +962,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @size.started += instance.OnSize;
             @size.performed += instance.OnSize;
             @size.canceled += instance.OnSize;
+            @active.started += instance.OnActive;
+            @active.performed += instance.OnActive;
+            @active.canceled += instance.OnActive;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -939,6 +987,9 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
             @size.started -= instance.OnSize;
             @size.performed -= instance.OnSize;
             @size.canceled -= instance.OnSize;
+            @active.started -= instance.OnActive;
+            @active.performed -= instance.OnActive;
+            @active.canceled -= instance.OnActive;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1153,6 +1204,7 @@ public partial class @NewControls: IInputActionCollection2, IDisposable
         void OnMovements1(InputAction.CallbackContext context);
         void OnJump1(InputAction.CallbackContext context);
         void OnSize(InputAction.CallbackContext context);
+        void OnActive(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -23,10 +23,10 @@ public class movements : MonoBehaviour
     //  public GameObject linerend;
 
     public bool m_facingright = true;
-    int action;
+    public int action;
     public static bool isjumping = false;
     public static bool isfalling = false;
-    int actionid, isfallingid;
+    public int actionid, isfallingid;
     // RewindByKeyPress rewind;
     public float force;
     // WaitForSeconds deathdelay = new WaitForSeconds(1f);
@@ -56,7 +56,10 @@ public class movements : MonoBehaviour
     void Update()
     {
         // print(leftrightjumpcheck);
-        input();
+      //  if (movcont.playerfirst == false)
+        {
+            input();
+        }
        
         //float test = controls.player.movements.ReadValue<float>();
         // print(test);

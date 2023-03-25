@@ -10,7 +10,7 @@ public class movementother : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     public float sizefactor;
-    private GameObject x; 
+    
     public float force;
    
     public float jumpforce = 12f;
@@ -23,14 +23,15 @@ public class movementother : MonoBehaviour
     int action1;
     public static bool isjumping1 = false;
     public static bool isfalling1 = false;
-    int actionid1, isfallingid1;
+    public int actionid1, isfallingid1;
     Vector3 originalsize;
    
     ABILITYUSE ability;
-   
+    public static bool condition=false; 
     public Transform button;
     public int totalapples = 0;
    public Animator anim1;
+    public GameObject largeicon;
   
     void Start()
     {
@@ -41,7 +42,7 @@ public class movementother : MonoBehaviour
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
         action1 = 0;
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         actionid1 = Animator.StringToHash("action1");
         isfallingid1 = Animator.StringToHash("isfalling1");
         //  lines = FindObjectOfType<gismo1>();
@@ -54,16 +55,25 @@ public class movementother : MonoBehaviour
     void Update()
     {
         // print(leftrightjumpcheck);
-        input();
-        if(controls.player.size.ReadValue<float>() == 1)
+       // if (movcont.playersecond==false)
+        {
+            input();
+        }
+        if (controls.player.size.ReadValue<float>() == 1 && condition == false)
         {
             transform.localScale += new Vector3(Time.deltaTime*sizefactor, Time.deltaTime*sizefactor, 0);
             ability.CurrentHealth -= Time.deltaTime * ABILITYUSE.newFactor;
+            largeicon.SetActive(true);
         }
         else
         {
           transform.localScale -= new Vector3(Time.deltaTime * sizefactor, Time.deltaTime * sizefactor, 0);
+            largeicon.SetActive(false);
         }
+        /*if(transform.localScale.x > originalsize.x)
+        {
+            transform.localScale -= new Vector3(Time.deltaTime * sizefactor, Time.deltaTime * sizefactor, 0);
+        }*/
         if(transform.localScale.x < originalsize.x)
         {
             transform.localScale = originalsize;
