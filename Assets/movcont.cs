@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 public class movcont : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -19,6 +20,8 @@ public class movcont : MonoBehaviour
     private bool kamka=false;
     private bool kamka1 = false;
     public GameObject rewindicon;
+    public static bool wingame = false;
+    public GameObject cam;
    
     void Start()
     {
@@ -31,9 +34,25 @@ public class movcont : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.transform.position.x > 80f)
+        Scene active = SceneManager.GetActiveScene();
+       // SceneManager.LoadScene(active.name);
+        if (active.name == "Tutorial")
         {
-            global.SetActive(true);
+            if (player.transform.position.x > 80f)
+            {
+                global.SetActive(true);
+            }
+        }
+        if(active.name == "level1")
+        {
+            if (player.transform.position.x > 22f && player1.transform.position.x>22f)
+            {
+                movcont.wingame = true;
+            }
+            else
+            {
+                movcont.wingame = false;
+            }
         }
         if (Input.GetKey(KeyCode.Q)==true)
         {
@@ -44,11 +63,23 @@ public class movcont : MonoBehaviour
             rewindicon.SetActive(false);
         }
        
+       
     
         if (controls.player.active.ReadValue<float>() == -1)
         {
-            
-           
+
+
+            if (active.name == "Tutorial")
+            {
+                if (player.transform.position.x > 80f)
+                {
+                    cam.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+                }
+            }
+            else
+            {
+                cam.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+            }
             player1.GetComponent<RewindAbstract>().enabled = false;
             player1.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             player.GetComponent<RewindAbstract>().enabled = true;
@@ -63,10 +94,20 @@ public class movcont : MonoBehaviour
         }
         if(controls.player.active.ReadValue<float>()== 1)
         {
-           
-           
-            
 
+
+
+            if (active.name == "Tutorial")
+            {
+                if (player.transform.position.x > 80f)
+                {
+                    cam.GetComponent<CinemachineVirtualCamera>().Follow = player1.transform;
+                }
+            }
+            else
+            {
+                cam.GetComponent<CinemachineVirtualCamera>().Follow = player1.transform;
+            }
             //  StartCoroutine(waitforseconds1());
             player.GetComponent<RewindAbstract>().enabled = false;
             player.GetComponent<Rigidbody2D>().velocity = new Vector2(0f,0f);
@@ -84,7 +125,7 @@ public class movcont : MonoBehaviour
         if (player.GetComponent<movements>().enabled == false && kamka==false)
         {
             actionid = Animator.StringToHash("action");
-            print("ravi shirsat");
+           // print("ravi shirsat");
             FindObjectOfType<movementother>().largeicon.SetActive(false);
             player.GetComponent<Animator>().SetInteger(actionid, 0);
             kamka = true;
@@ -101,15 +142,20 @@ public class movcont : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player")){
-            player1.SetActive(true);
-            global.SetActive(true);
-            SceneManager.LoadScene("level1");
+            //  player1.SetActive(true);
+            ///  global.SetActive(true);
+            //   SceneManager.LoadScene("level1");
+            wingame = true;
 
             //FindObjectOfType<textmanagerscipr>().dailog();
 
 
 
 
+        }
+        else
+        {
+            wingame = false;
         }
     }
 

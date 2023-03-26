@@ -62,18 +62,28 @@ public class movementother : MonoBehaviour
         if (controls.player.size.ReadValue<float>() == 1 && condition == false)
         {
             transform.localScale += new Vector3(Time.deltaTime*sizefactor, Time.deltaTime*sizefactor, 0);
+            jumpforce += Time.deltaTime * sizefactor;
             ability.CurrentHealth -= Time.deltaTime * ABILITYUSE.newFactor;
             largeicon.SetActive(true);
         }
         else
         {
-          transform.localScale -= new Vector3(Time.deltaTime * sizefactor, Time.deltaTime * sizefactor, 0);
+            jumpforce -= Time.deltaTime * sizefactor;
+            transform.localScale -= new Vector3(Time.deltaTime * sizefactor, Time.deltaTime * sizefactor, 0);
             largeicon.SetActive(false);
         }
         /*if(transform.localScale.x > originalsize.x)
         {
             transform.localScale -= new Vector3(Time.deltaTime * sizefactor, Time.deltaTime * sizefactor, 0);
         }*/
+        if (jumpforce < 5)
+        {
+            jumpforce = 5;
+        }
+        if(jumpforce > 8)
+        {
+            jumpforce = 8;
+        }
         if(transform.localScale.x < originalsize.x)
         {
             transform.localScale = originalsize;

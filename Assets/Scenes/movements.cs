@@ -28,6 +28,8 @@ public class movements : MonoBehaviour
     public static bool isfalling = false;
     public int actionid, isfallingid;
     // RewindByKeyPress rewind;
+    public AudioClip collsound, stabsound;
+    AudioSource asur;
     public float force;
     // WaitForSeconds deathdelay = new WaitForSeconds(1f);
     // public static bool leftrightjumpcheck = false;
@@ -46,6 +48,7 @@ public class movements : MonoBehaviour
         action = 0;
         Application.targetFrameRate = 60;
         actionid = Animator.StringToHash("action");
+        asur = FindObjectOfType<AudioSource>();
         isfallingid = Animator.StringToHash("isfalling");
       //  lines = FindObjectOfType<gismo1>();
 
@@ -227,7 +230,7 @@ public class movements : MonoBehaviour
             fruits.Add(x);
 
             x.GetComponent<CircleCollider2D>().enabled = false;
-
+            asur.PlayOneShot(collsound);
 
         }
     }
