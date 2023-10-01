@@ -13,10 +13,9 @@ public class ABILITYUSE : MonoBehaviour
     public int collectable_factors;
     public bool IskeyEnabled_w;
     public  static float newFactor = 20f;
-    // public GameObject sphere;
-   // Movement collectable;
+    
     NewControls _newControls;
-    // movements player;
+    
     private void Awake()
     {
         IskeyEnabled_w = true;
@@ -27,14 +26,9 @@ public class ABILITYUSE : MonoBehaviour
         _newControls = new NewControls();
         _newControls.player.Enable();
         image = GetComponent<Image>();
-      //  collectable = FindObjectOfType<Movement>();
-       // Instantiate(firehumai,posImage.transform);
-        // player = FindObjectOfType<movements>();
-        //Vector3(285f, 3f, 4.88f,)
-      //  firehumai.transform.position = new Vector3(285f, 3f, 4.88f);
     }
 
-    // Update is called once per frame
+//shantanu aaahe manus
     void Update()
     {
        collectable_factors = movements.totalapples + 2;
